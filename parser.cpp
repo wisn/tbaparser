@@ -243,6 +243,15 @@ void A(Runner& runner, Parsec& parsec) {
 
       C(runner, parsec);
     }
+    else if (isOpenBracket(h))
+    {
+      parsec.brackets++;
+
+      Token token ("KURBUKA", "(");
+      parsec.tokens.push_back(token);
+
+      S(runner, parsec);
+    }
     else
     {
       Token token ("ERROR", "");
@@ -357,6 +366,19 @@ void D(Runner& runner, Parsec& parsec) {
 
       E(runner, parsec);
     }
+    else if (isCloseBracket(h))
+    {
+      parsec.brackets--;
+
+      Token token ("", ")");
+      token.type = parsec.brackets < 0 ? "ERROR" : "KURTUTUP";
+
+      if (parsec.brackets < 0) parsec.validity = false;
+
+      parsec.tokens.push_back(token);
+
+      K(runner, parsec);
+    }
     else
     {
       Token token ("ERROR", "");
@@ -378,7 +400,7 @@ void E(Runner& runner, Parsec& parsec) {
       parsec.tokens.push_back(token);
 
       runner.tmp = "";
-      
+
       F(runner, parsec);
     }
     else
@@ -413,6 +435,8 @@ void F(Runner& runner, Parsec& parsec) {
 
       S(runner, parsec);
     }
+    else if (isSpace(h))
+      F(runner, parsec);
     else
     {
       Token token ("ERROR", "");
