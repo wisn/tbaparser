@@ -355,11 +355,6 @@ void D(Runner& runner, Parsec& parsec) {
     {
       runner.tmp += h;
 
-      Token token ("OPR", runner.tmp);
-      parsec.tokens.push_back(token);
-
-      runner.tmp = "";
-
       E(runner, parsec);
     }
     else
@@ -378,7 +373,14 @@ void E(Runner& runner, Parsec& parsec) {
     char h = head(runner);
 
     if (isSpace(h))
+    {
+      Token token ("OPR", runner.tmp);
+      parsec.tokens.push_back(token);
+
+      runner.tmp = "";
+      
       F(runner, parsec);
+    }
     else
     {
       Token token ("ERROR", "");
