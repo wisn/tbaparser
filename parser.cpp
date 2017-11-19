@@ -379,13 +379,13 @@ void E(Runner& runner, Parsec& parsec) {
 
     if (isSpace(h))
       F(runner, parsec);
-      else
-      {
-        Token token ("ERROR", "");
-        parsec.tokens.push_back(token);
+    else
+    {
+      Token token ("ERROR", "");
+      parsec.tokens.push_back(token);
 
-        parsec.validity = false;
-      }
+      parsec.validity = false;
+    }
   }
 }
 
