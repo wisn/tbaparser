@@ -171,6 +171,8 @@ char head(Runner& r) {
 void getInput(Runner& r) {
   printf(">> ");
   getline(cin, r.input);
+
+  if (cin.eof()) r.input = "exit";
 }
 
 void S(Runner& runner, Parsec& parsec) {
