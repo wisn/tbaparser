@@ -32,14 +32,18 @@ struct PDA {
 };
 
 struct CFG {
-  bool validity;
+  int brackets;
+  bool validity;  
   list<Token> tokens;
 
   CFG(list<Token> tokens) {
     this->tokens = tokens;
+    this->brackets = 0;
     this->validity = true;
 
     this->S();
+
+    if (this->brackets != 0) this->validity = false;
   }
 
   string head() {
@@ -65,8 +69,10 @@ struct CFG {
 
       if (h == "NUM")
         this->A();
-      else if (h == "KURBUKA")
+      else if (h == "KURBUKA") {
+        this->brackets++;
         this->B();
+      }
       else this->validity = false;
     }
   }
@@ -77,8 +83,10 @@ struct CFG {
 
       if (h == "OPR")
         this->C();
-      else if (h == "KURTUTUP")
+      else if (h == "KURTUTUP") {
+        this->brackets--;
         this->D();
+      }
       else if (h == "");
       else this->validity = false;
     }
@@ -96,8 +104,10 @@ struct CFG {
         this->A();
       else if (h == "KURBUKA")
         this->B();
-      else if (h == "KURTUTUP")
+      else if (h == "KURTUTUP") {
+        this->brackets--;
         this->D();
+      }
       else this->validity = false;
     }
   }
@@ -108,8 +118,10 @@ struct CFG {
 
       if (h == "OPR")
         this->C();
-      else if (h == "KURTUTUP")
+      else if (h == "KURTUTUP") {
+        this->brackets--;
         this->D();
+      }
       else if (h == "");
       else this->validity = false;
     }
